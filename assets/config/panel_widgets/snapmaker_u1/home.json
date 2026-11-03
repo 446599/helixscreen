@@ -1,0 +1,7 @@
+{
+  "_comment": "The U1's 480x320 panel starts with print state and the essentials. The widget catalog keeps every hidden widget available for personal layouts.",
+  "disabled": {
+    "micro": ["fan_stack", "temp_graph", "tips"],
+    "tiny": ["fan_stack", "temp_graph", "tips"]
+  }
+}
