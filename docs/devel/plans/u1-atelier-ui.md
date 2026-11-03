@@ -37,6 +37,19 @@ The compact U1 home seed continues to suppress the fan stack, temperature graph,
 tips. Its initial view stays focused on print state and heater metrics; optional
 widgets remain available through the catalog.
 
+
+## V3: Claude palette + minimal skeuomorphism
+
+Henry asked for Claude.ai-like warm cream paper with terracotta accents instead of the
+dark teal industrial look. Light is the intended default for U1 Atelier (snapmaker_u1 /
+HELIX_THEME=u1-atelier when `/dark_mode` is unset). Dark keeps a warm charcoal alternate.
+
+Theme knobs turn soft elevation back on (`shadow_intensity` 16, `shadow_opa` 32,
+`shadow_offset_y` 3, `border_radius_size` Rounded/4) so primary buttons, selected language
+chips, and cards can read as lightly raised — minimal skeuomorphism without heavy chrome.
+Language selection uses a raised card-fill chip with the theme shadow; unselected rows stay
+flat. `ui_card` no longer hard-zeros shadow when the active theme enables one.
+
 ## Build and install
 
 Build the U1 package with `make package-snapmaker-u1` on a configured Linux Docker build
