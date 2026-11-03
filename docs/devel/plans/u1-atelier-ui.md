@@ -25,6 +25,18 @@ HELIX_MOCK_PRINTER=snapmaker_u1 HELIX_THEME=u1-atelier ./build/bin/helix-screen 
 Complete or reset the wizard to inspect all setup steps. `HELIX_THEME` is optional once
 the compact-screen default is in effect. The U1 preset also loads its compact home seed.
 
+## V2: quieter surfaces
+
+The first preview still felt too busy, so v2 removes the framed surface around the
+language list and drops row dividers entirely. Selection is a low-opacity elevated
+fill, while the wizard progress and subtitle recede behind the title and content.
+The primary action uses the theme accent. The Atelier palette moves closer to black,
+uses softer secondary text, raises border radius to 10, lowers border opacity to 10, and keeps shadows off.
+
+The compact U1 home seed continues to suppress the fan stack, temperature graph, and
+tips. Its initial view stays focused on print state and heater metrics; optional
+widgets remain available through the catalog.
+
 ## Build and install
 
 Build the U1 package with `make package-snapmaker-u1` on a configured Linux Docker build

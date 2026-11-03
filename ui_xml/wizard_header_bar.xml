@@ -4,7 +4,7 @@
 <component>
   <view name="wizard_header_bar"
         extends="lv_obj" width="100%" height="content" flex_flow="column" scrollable="false" style_bg_opa="0"
-        style_border_width="0" style_pad_hor="#space_md" style_pad_top="#space_sm" style_pad_bottom="#space_xs">
+        style_border_width="0" style_pad_hor="#space_sm" style_pad_top="#space_xs" style_pad_bottom="0">
     <!-- Row 1: Title + Progress -->
     <lv_obj width="100%"
             height="content" flex_flow="row" style_flex_main_place="space_between" style_flex_cross_place="center"
@@ -17,17 +17,17 @@
            printer's hardware, and a total that can lurch reads as a lie. -->
       <lv_obj name="wizard_progress"
               width="content" height="content" flex_flow="row" style_pad_all="0" style_pad_gap="4">
-        <text_small text="Step"/>
-        <text_small name="wizard_step_current" bind_text="wizard_step_current"/>
-        <text_small text="of">
+        <text_small text="Step" style_text_opa="145" style_text_color="#text_muted"/>
+        <text_small name="wizard_step_current" bind_text="wizard_step_current" style_text_opa="145" style_text_color="#text_muted"/>
+        <text_small text="of" style_text_opa="145" style_text_color="#text_muted">
           <bind_flag_if_not_eq subject="wizard_total_visible" flag="hidden" ref_value="1"/>
         </text_small>
-        <text_small name="wizard_step_total" bind_text="wizard_step_total">
+        <text_small name="wizard_step_total" bind_text="wizard_step_total" style_text_opa="145" style_text_color="#text_muted">
           <bind_flag_if_not_eq subject="wizard_total_visible" flag="hidden" ref_value="1"/>
         </text_small>
       </lv_obj>
     </lv_obj>
     <!-- Row 2: Subtitle (contextual hint) -->
-    <text_muted name="wizard_subtitle" width="100%" bind_text="wizard_subtitle"/>
+    <text_small name="wizard_subtitle" width="100%" bind_text="wizard_subtitle" style_text_opa="180" style_text_color="#text_muted"/>
   </view>
 </component>

@@ -180,13 +180,11 @@ static void update_language_list_selection(lv_obj_t* selected_btn) {
         bool is_selected = (btn == selected_btn);
 
         if (is_selected) {
-            // Selected: primary color background
-            lv_obj_set_style_bg_color(btn, theme_manager_get_color("primary"), LV_PART_MAIN);
-            lv_obj_set_style_bg_opa(btn, LV_OPA_COVER, LV_PART_MAIN);
+            // Soft elevated fill — no outline ring
+            lv_obj_set_style_bg_color(btn, theme_manager_get_color("elevated_bg"), LV_PART_MAIN);
+            lv_obj_set_style_bg_opa(btn, 112, LV_PART_MAIN);
             if (label) {
-                lv_obj_set_style_text_color(
-                    label, theme_manager_get_readable_on(theme_manager_get_color("primary")),
-                    LV_PART_MAIN);
+                lv_obj_set_style_text_color(label, theme_manager_get_color("text"), LV_PART_MAIN);
             }
         } else {
             // Unselected: transparent background
