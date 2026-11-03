@@ -829,8 +829,8 @@
          runtime by ui_theme_register_responsive_fonts() - do NOT define them
          here or responsive overrides will be silently ignored. -->
     <!-- font_heading variants (section headings, large text) -->
-    <string name="font_heading_micro" value="noto_sans_14"/>
-    <string name="font_heading_tiny" value="noto_sans_16"/>
+    <string name="font_heading_micro" value="noto_sans_16"/>
+    <string name="font_heading_tiny" value="noto_sans_18"/>
     <string name="font_heading_small" value="noto_sans_20"/>
     <string name="font_heading_medium" value="noto_sans_26"/>
     <string name="font_heading_large" value="noto_sans_28"/>
@@ -875,8 +875,8 @@
     <string name="font_body_bold_xxlarge" value="noto_sans_bold_32"/>
     <!-- NO BASE font_body_bold - registered at runtime -->
     <!-- font_body variants (standard body text) -->
-    <string name="font_body_micro" value="noto_sans_12"/>
-    <string name="font_body_tiny" value="noto_sans_12"/>
+    <string name="font_body_micro" value="noto_sans_14"/>
+    <string name="font_body_tiny" value="noto_sans_14"/>
     <string name="font_body_small" value="noto_sans_14"/>
     <string name="font_body_medium" value="noto_sans_18"/>
     <string name="font_body_large" value="noto_sans_20"/>

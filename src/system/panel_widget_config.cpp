@@ -41,6 +41,29 @@ namespace {
 /// pre-v22 cells. No layout below it carries either key, so the absence of both
 /// says nothing there.
 constexpr int kCoordinateSystemNamedFrom = 24;
+constexpr int kU1HomeLayoutVersion = 1;
+
+bool has_stock_compact_home_anchors(const nlohmann::json& layout) {
+    if (!layout.is_object() || !layout.contains("pages") || !layout["pages"].is_array()) {
+        return false;
+    }
+    for (const auto& page : layout["pages"]) {
+        if (!page.is_object() || !page.contains("widgets") || !page["widgets"].is_array()) {
+            continue;
+        }
+        for (const auto& widget : page["widgets"]) {
+            if (!widget.is_object() ||
+                !helix::json_util::safe_bool(widget, "enabled", false)) {
+                continue;
+            }
+            const std::string id = helix::json_util::safe_string(widget, "id");
+            if (id == "tips" || id == "fan_stack" || id == "printer_image") {
+                return true;
+            }
+        }
+    }
+    return false;
+}
 
 } // namespace
 
@@ -245,6 +268,25 @@ void PanelWidgetConfig::load() {
     // Per-panel path: /printers/{active}/panel_widgets/<panel_id>
     std::string panel_path = config_.df() + "panel_widgets/" + panel_id_;
     auto saved = config_.get<json>(panel_path, json());
+
+    // The earlier U1 Atelier seed only changed colors and left compact installs
+    // with the stock dashboard. Replace that one known layout once; later user
+    // edits and layouts without those enabled stock anchors remain untouched.
+    if (panel_id_ == "home" && config_.get_preset() == "snapmaker_u1") {
+        const std::string migration_path = config_.df() + "u1_home_layout_version";
+        const int migration_version = config_.get<int>(migration_path, 0);
+        if (migration_version < kU1HomeLayoutVersion) {
+            config_.set<int>(migration_path, kU1HomeLayoutVersion);
+            if (has_stock_compact_home_anchors(saved)) {
+                spdlog::info("[PanelWidgetConfig] Replacing stock U1 home layout with the "
+                             "compact print-and-temperature layout");
+                saved = json();
+                config_.set<json>(panel_path, json());
+                had_saved_layout_ = false;
+            }
+            config_.save();
+        }
+    }
 
     // Migration: move legacy "home_widgets" to "panel_widgets.home"
     if (panel_id_ == "home" && (saved.is_null() || (!saved.is_array() && !saved.is_object()))) {

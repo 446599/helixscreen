@@ -50,6 +50,21 @@ chips, and cards can read as lightly raised — minimal skeuomorphism without he
 Language selection uses a raised card-fill chip with the theme shadow; unselected rows stay
 flat. `ui_card` no longer hard-zeros shadow when the active theme enables one.
 
+## V4: U1 structure and hierarchy
+
+The U1 compact home now gives print state the upper five of eight grid rows, then places
+nozzle and bed temperatures together in the remaining row. The active-print percentage is
+larger, and compact temperature values use the medium readout size. Printer imagery, tips,
+fan stacks, and the temperature graph stay off the default U1 home. The widget catalog and
+Filament destination retain the optional features.
+
+On U1, navigation now presents Home, Files, Controls, Filament, Settings, then Advanced.
+Panel IDs and their behavior stay stable; Files moves into the second, easiest-to-reach
+position. Compact body and heading fonts step up, while the Files, Motion, and temperature
+surfaces use more breathing room. Existing U1 installs that still have enabled stock
+`tips`, `fan_stack`, or `printer_image` anchors are reset once to the U1 seed and marked in
+printer settings as `u1_home_layout_version: 1`; other saved home layouts are kept.
+
 ## Build and install
 
 Build the U1 package with `make package-snapmaker-u1` on a configured Linux Docker build

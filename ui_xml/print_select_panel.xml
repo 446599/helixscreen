@@ -32,7 +32,7 @@
 
     <!-- Compact header with source tabs and view toggle (32px) -->
     <lv_obj width="100%"
-            height="content" style_pad_left="#space_md" style_pad_right="#space_md" style_pad_top="#space_xs"
+            height="content" style_pad_left="#space_lg" style_pad_right="#space_lg" style_pad_top="#space_sm"
             style_pad_bottom="0" flex_flow="row" style_flex_main_place="space_between" style_flex_cross_place="center"
             scrollable="false">
 
@@ -99,8 +99,8 @@
     <!-- Card view container (visible when view_mode == 0) -->
     <!-- Note: style_pad_gap controls spacing between cards, used by C++ layout calculations -->
     <lv_obj name="card_view_container"
-            width="100%" height="100%" style_pad_all="0" style_pad_left="#space_md" style_pad_right="#space_md"
-            style_pad_gap="#space_md" flex_flow="row_wrap" scrollable="true" flex_grow="1">
+            width="100%" height="100%" style_pad_all="0" style_pad_left="#space_lg" style_pad_right="#space_lg"
+            style_pad_gap="#space_lg" flex_flow="row_wrap" scrollable="true" flex_grow="1">
       <bind_flag_if_eq subject="print_select_view_mode" flag="hidden" ref_value="1"/>
       <!-- Cards will be dynamically added here via C++ -->
     </lv_obj>
@@ -110,8 +110,8 @@
       <bind_flag_if_eq subject="print_select_view_mode" flag="hidden" ref_value="0"/>
       <!-- Column headers -->
       <lv_obj name="list_header"
-              width="100%" height="content" style_pad_left="#nav_padding" style_pad_right="#nav_padding"
-              style_pad_top="#space_xs" style_pad_bottom="#space_sm" flex_flow="row" style_flex_main_place="start"
+              width="100%" height="content" style_pad_left="#space_lg" style_pad_right="#space_lg"
+              style_pad_top="#space_sm" style_pad_bottom="#space_md" flex_flow="row" style_flex_main_place="start"
               style_flex_cross_place="center">
         <!-- Filename header (flex-grow) -->
         <ui_button name="header_filename"
