@@ -48,8 +48,11 @@ static void* ui_card_xml_create(lv_xml_parser_state_t* state, const char** attrs
     // Disable scrolling (cards are fixed containers, not scroll areas)
     lv_obj_remove_flag(obj, LV_OBJ_FLAG_SCROLLABLE);
 
-    // Shadow: 0 (no shadow by default - can be overridden in XML)
-    lv_obj_set_style_shadow_width(obj, 0, LV_PART_MAIN);
+    // Soft elevation when the theme enables shadows; otherwise keep flat.
+    // Local width=0 would override StyleRole::Card's apply_shadow().
+    if (ThemeManager::instance().current_palette().shadow_width <= 0) {
+        lv_obj_set_style_shadow_width(obj, 0, LV_PART_MAIN);
+    }
 
     // Padding: responsive via space_md token
     int32_t padding = theme_manager_get_spacing("space_md");

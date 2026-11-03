@@ -19,6 +19,7 @@
 #include "app_globals.h"
 #include "backdrop_blur.h"
 #include "connection_state.h" // For ConnectionState enum
+#include "config.h"
 #include "display_settings_manager.h"
 #include "env_knobs.h"
 #include "helix-xml/src/xml/lv_xml.h"
@@ -1041,6 +1042,23 @@ void NavigationManager::wire_events(lv_obj_t* navbar) {
 
     // Store navbar reference for z-order management when showing overlays
     navbar_widget_ = navbar;
+
+    // On the U1, Files is a daily action and belongs immediately after Home.
+    // Keep PanelId and callback wiring stable; only change the visual order.
+    if (Config::get_instance() && Config::get_instance()->get_preset() == "snapmaker_u1") {
+        static constexpr const char* kU1Order[] = {"nav_btn_home", "nav_btn_print_select",
+                                                   "nav_btn_controls", "nav_btn_filament",
+                                                   "nav_btn_settings", "nav_btn_advanced"};
+        lv_obj_t* home_button = lv_obj_find_by_name(navbar, kU1Order[0]);
+        if (home_button) {
+            const int32_t first_index = lv_obj_get_index(home_button);
+            for (size_t i = 0; i < std::size(kU1Order); ++i) {
+                if (lv_obj_t* button = lv_obj_find_by_name(navbar, kU1Order[i])) {
+                    lv_obj_move_to_index(button, first_index + static_cast<int32_t>(i));
+                }
+            }
+        }
+    }
 
     lv_obj_remove_flag(navbar, LV_OBJ_FLAG_CLICKABLE);
 

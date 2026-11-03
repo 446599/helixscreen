@@ -119,7 +119,7 @@ using helix::theme_detail::ThemeSubjects;
  *
  * HELIX_THEME env var overrides config (useful for testing/screenshots).
  */
-static helix::ThemeData theme_manager_load_active_theme() {
+static helix::ThemeData theme_manager_load_active_theme(lv_display_t* display) {
     std::string themes_dir = helix::get_themes_directory();
 
     // Ensure the user themes directory exists (shipped themes live in defaults/)
@@ -134,7 +134,15 @@ static helix::ThemeData theme_manager_load_active_theme() {
     } else {
         // Read theme name from config
         Config* config = Config::get_instance();
-        theme_name = config->get<std::string>("/display/theme", helix::kDefaultTheme);
+        if (config->exists("/display/theme")) {
+            theme_name = config->get<std::string>("/display/theme", helix::kDefaultTheme);
+        } else {
+            const bool compact_panel = display && lv_display_get_horizontal_resolution(display) <= 480 &&
+                                       lv_display_get_vertical_resolution(display) <= 320;
+            theme_name = compact_panel || config->get_preset() == "snapmaker_u1"
+                             ? "u1-atelier"
+                             : helix::kDefaultTheme;
+        }
     }
 
     // Load theme file (supports fallback from user themes to defaults)
@@ -223,7 +231,7 @@ void theme_manager_init(lv_display_t* display, bool use_dark_mode_param) {
     }
 
     // Load active theme from config/themes directory
-    runtime().active_theme = theme_manager_load_active_theme();
+    runtime().active_theme = theme_manager_load_active_theme(display);
 
     // Register semantic colors from dual-palette system (includes _light/_dark variants and base
     // names) NOTE: Legacy palette registration removed - was causing token collisions (text_light

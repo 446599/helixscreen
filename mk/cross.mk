@@ -631,7 +631,7 @@ else ifeq ($(PLATFORM_TARGET),snapmaker-u1)
     ENABLE_EVDEV := yes
     BUILD_SUBDIR := snapmaker-u1
     STRIP_BINARY := yes
-    FONT_TIERS := tiny small
+    FONT_TIERS := tiny small medium
 
 else ifeq ($(PLATFORM_TARGET),x86)
     # -------------------------------------------------------------------------

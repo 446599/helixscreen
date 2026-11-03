@@ -180,17 +180,26 @@ static void update_language_list_selection(lv_obj_t* selected_btn) {
         bool is_selected = (btn == selected_btn);
 
         if (is_selected) {
-            // Selected: primary color background
-            lv_obj_set_style_bg_color(btn, theme_manager_get_color("primary"), LV_PART_MAIN);
+            // Raised chip: warm elevated fill + soft theme shadow (minimal skeuomorphism)
+            lv_obj_set_style_bg_color(btn, theme_manager_get_color("card_bg"), LV_PART_MAIN);
             lv_obj_set_style_bg_opa(btn, LV_OPA_COVER, LV_PART_MAIN);
+            const auto& theme = theme_manager_get_active_theme();
+            const int shadow_w = theme.properties.shadow_intensity;
+            const int shadow_opa = theme.properties.shadow_opa;
+            const int shadow_oy = theme.properties.shadow_offset_y;
+            lv_obj_set_style_shadow_width(btn, shadow_w > 0 ? shadow_w : 0, LV_PART_MAIN);
+            lv_obj_set_style_shadow_opa(btn, static_cast<lv_opa_t>(shadow_w > 0 ? shadow_opa : 0),
+                                        LV_PART_MAIN);
+            lv_obj_set_style_shadow_offset_y(btn, shadow_oy, LV_PART_MAIN);
+            lv_obj_set_style_shadow_color(btn, theme_manager_get_color("border"), LV_PART_MAIN);
             if (label) {
-                lv_obj_set_style_text_color(
-                    label, theme_manager_get_readable_on(theme_manager_get_color("primary")),
-                    LV_PART_MAIN);
+                lv_obj_set_style_text_color(label, theme_manager_get_color("text"), LV_PART_MAIN);
             }
         } else {
-            // Unselected: transparent background
+            // Unselected: flat / transparent
             lv_obj_set_style_bg_opa(btn, LV_OPA_TRANSP, LV_PART_MAIN);
+            lv_obj_set_style_shadow_width(btn, 0, LV_PART_MAIN);
+            lv_obj_set_style_shadow_opa(btn, LV_OPA_TRANSP, LV_PART_MAIN);
             if (label) {
                 lv_obj_set_style_text_color(label, theme_manager_get_color("text"), LV_PART_MAIN);
             }

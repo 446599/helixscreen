@@ -1,0 +1,33 @@
+{
+  "_comment": "The U1 home leads with print state, then gives nozzle and bed temperatures a single clear row. Optional detail remains in the widget catalog.",
+  "anchors": [
+    {
+      "id": "print_status",
+      "placements": {
+        "micro": { "col": 0, "row": 0, "colspan": 12, "rowspan": 5 },
+        "tiny": { "col": 0, "row": 0, "colspan": 10, "rowspan": 5 },
+        "micro@8x6": { "col": 0, "row": 0, "colspan": 8, "rowspan": 4 }
+      }
+    },
+    {
+      "id": "temperature",
+      "placements": {
+        "micro": { "col": 0, "row": 5, "colspan": 6, "rowspan": 3 },
+        "tiny": { "col": 0, "row": 5, "colspan": 5, "rowspan": 3 },
+        "micro@8x6": { "col": 0, "row": 4, "colspan": 4, "rowspan": 2 }
+      }
+    },
+    {
+      "id": "bed_temperature",
+      "placements": {
+        "micro": { "col": 6, "row": 5, "colspan": 6, "rowspan": 3 },
+        "tiny": { "col": 5, "row": 5, "colspan": 5, "rowspan": 3 },
+        "micro@8x6": { "col": 4, "row": 4, "colspan": 4, "rowspan": 2 }
+      }
+    }
+  ],
+  "disabled": {
+    "micro": ["printer_image", "fan_stack", "temp_graph", "tips"],
+    "tiny": ["printer_image", "fan_stack", "temp_graph", "tips"]
+  }
+}

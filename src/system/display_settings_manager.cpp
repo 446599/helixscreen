@@ -261,8 +261,23 @@ void DisplaySettingsManager::init_subjects() {
 
     Config* config = Config::get_instance();
 
-    // Dark mode (default: true = dark)
-    bool dark_mode = config->get<bool>("/dark_mode", true);
+    // Dark mode (default: true = dark). U1 Atelier's Claude paper look prefers
+    // light when the user has never set an explicit preference.
+    bool default_dark = true;
+    if (!config->exists("/dark_mode")) {
+        std::string theme_name;
+        if (const char* env_theme = std::getenv("HELIX_THEME"); env_theme && env_theme[0] != '\0') {
+            theme_name = env_theme;
+        } else if (config->exists("/display/theme")) {
+            theme_name = config->get<std::string>("/display/theme", "");
+        } else if (config->get_preset() == "snapmaker_u1") {
+            theme_name = "u1-atelier";
+        }
+        if (theme_name == "u1-atelier") {
+            default_dark = false;
+        }
+    }
+    bool dark_mode = config->get<bool>("/dark_mode", default_dark);
     UI_MANAGED_SUBJECT_INT(dark_mode_subject_, dark_mode ? 1 : 0, "settings_dark_mode", subjects_);
 
     // Dark mode availability (depends on theme - updated in on_theme_changed())

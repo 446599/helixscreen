@@ -847,6 +847,46 @@ TEST_CASE_METHOD(PanelWidgetConfigFixture,
     REQUIRE(get_data().contains("home_widgets"));
 }
 
+TEST_CASE_METHOD(PanelWidgetConfigFixture,
+                 "PanelWidgetConfig: U1 stock home anchors migrate to the compact seed once",
+                 "[panel_widget][widget_config][migration]") {
+    setup_with_pages({{"main",
+                       json::array({{{"id", "print_status"}, {"enabled", true}, {"col", 0},
+                                     {"row", 0}},
+                                    {{"id", "tips"}, {"enabled", true}, {"col", 2}, {"row", 0}},
+                                    {{"id", "fan_stack"}, {"enabled", true}, {"col", 4},
+                                     {"row", 0}}})}});
+    config.set_preset("snapmaker_u1");
+
+    PanelWidgetConfig wc("home", config);
+    wc.load();
+
+    CHECK(get_printer_data()["u1_home_layout_version"] == 1);
+    CHECK(get_printer_data()["panel_widgets"]["home"].is_null());
+    CHECK_FALSE(wc.had_saved_layout());
+    CHECK(wc.has_pending_anchors());
+}
+
+TEST_CASE_METHOD(PanelWidgetConfigFixture,
+                 "PanelWidgetConfig: U1 home migration preserves layouts without stock anchors",
+                 "[panel_widget][widget_config][migration]") {
+    setup_with_pages({{"main",
+                       json::array({{{"id", "print_status"}, {"enabled", true}, {"col", 0},
+                                     {"row", 0}},
+                                    {{"id", "temperature"}, {"enabled", true}, {"col", 0},
+                                     {"row", 4}}})}});
+    config.set_preset("snapmaker_u1");
+
+    PanelWidgetConfig wc("home", config);
+    wc.load();
+
+    CHECK(get_printer_data()["u1_home_layout_version"] == 1);
+    CHECK(get_printer_data()["panel_widgets"]["home"].is_object());
+    CHECK(wc.had_saved_layout());
+    CHECK(wc.entries().size() >= 2);
+    CHECK(wc.entries()[1].id == "temperature");
+}
+
 // ============================================================================
 // Grid coordinate tests
 // ============================================================================
